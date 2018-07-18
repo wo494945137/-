@@ -1,0 +1,103 @@
+镜像iso文件  创建多个容器 每个容器都是一个服务
+
+
+0、  #安装docker
+yum -y install docker-io
+
+启动docker服务
+service docker start
+
+1、 #从官网拉取镜像
+
+docker pull <镜像名:tag>
+
+如：docker pull centos(拉取centos的镜像到本机)
+
+
+2、#搜索在线可用镜像名
+
+docker search <镜像名>
+
+如：docker search centos( 在线查找centos的镜像)
+
+
+3、#查询所有的镜像，默认是最近创建的排在最上
+
+docker images
+
+
+4、#查看正在运行的容器
+
+docker ps
+
+
+5、#删除单个镜像
+
+docker rmi -f <镜像ID>
+
+
+6、#启动、停止操作
+
+docker stop <容器名or ID> #停止某个容器 
+
+docker start <容器名or ID> #启动某个容器 
+
+docker kill <容器名or ID> #杀掉某个容器
+
+
+
+7、#查询某个容器的所有操作记录。
+
+docker logs {容器ID|容器名称} 
+
+
+
+8、# 制作镜像  使用以下命令，根据某个“容器 ID”来创建一个新的“镜像”：
+
+docker commit 93639a83a38e  wsl/javaweb:0.1
+
+
+
+9、#启动一个容器
+
+docker run -d -p 58080:8080 --name javaweb wsl/javaweb:0.1 /root/run.sh
+
+解释：-d：表示以“守护模式”执行/root/run.sh脚本
+
+          -p：表示宿主机与容器的端口映射，此时将容器内部的 8080 端口映射为宿主机的 58080 端口，这样就向外界暴露了 58080 端口，可通过 Docker 网桥来访问容器内部的 8080 端口了。
+
+          -name:为容器命名
+		  
+		  
+
+10、#最后补充一个启动docker服务的命令
+
+很简单：
+
+service docker start
+
+
+
+
+批量删除----------------------------------------------------------------------
+
+
+  杀死所有正在运行的容器
+docker kill $(docker ps -a -q)
+
+
+        删除所有已经停止的容器
+docker rm $(docker ps -a -q)
+
+
+        删除所有未打 dangling 标签的镜像
+docker rmi $(docker images -q -f dangling=true)
+
+
+         删除所有镜像
+docker rmi $(docker images -q)
+
+
+        强制删除镜像名称中包含“doss-api”的镜像
+docker rmi --force $(docker images | grep doss-api | awk '{print $3}')
+
