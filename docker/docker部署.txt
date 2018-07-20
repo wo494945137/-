@@ -101,3 +101,19 @@ docker rmi $(docker images -q)
         强制删除镜像名称中包含“doss-api”的镜像
 docker rmi --force $(docker images | grep doss-api | awk '{print $3}')
 
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+docker端口映射或启动容器时报错Error response from daemon: driver failed programming external connectivity on endpoint quirky_allen
+
+
+解决:
+
+重启docker服务后再启动容器
+systemctl restart docker
+docker start foo
+
+ 

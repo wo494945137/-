@@ -1,0 +1,10 @@
+
+把项目上传到git hub遇到的问题
+
+解决git push  卡在Writing objects
+git config --global http.postBuffer 524288000
+
+
+在done里卡主 （可能是文件太大原因）
+
+$ git config http.postBuffer 123456789  （这个数可以修改，修改完稍等一会）
